@@ -1,0 +1,115 @@
+export HISTCONTROL="erasedups:ignorespace"
+export HISTSIZE=1000000 HISTFILESIZE=1000000
+export HISTIGNORE="&:ls:[bf]g:exit"
+export SHELL_SESSION_HISTORY=0
+shopt -s histappend
+shopt -u progcomp  # don't unfold dirs on tab
+
+export EDITOR=vim
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+export PROMPT_COMMAND="history -a;history -c;history -r"
+
+export PS1="\[\033[1m\033[38;5;8m\]\W \[\e[1;37m\]→ \[\e[0m\]"
+if [[ "$SSH_CLIENT" != "" ]]; then
+    export PS1="\[\\033[1;32m\\]\h\[\e[0m\]:$PS1"
+fi
+
+# aliases
+which pbcopy &> /dev/null || alias pbcopy='printf "\e]52;c;"$(openssl base64 -A)"\a"'
+alias clear="printf '\33c\e[3J\e[2 q'"
+alias mkdir="mkdir -pv"
+alias grep="grep --color"
+alias ls="ls -h --color"
+alias la="ls -hA --color"
+alias ll="ls -hla --color"
+alias cp="cp -i"
+alias ln="ln -i"
+alias mv="mv -i"
+alias c="clear"
+
+if [[ $- == *i* ]]; then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+fi
+
+# show how much time operation took
+function fmt-time() {
+    local hours=$(($1 / 3600))
+    local minutes=$((($1 % 3600) / 60))
+    local seconds=$(($1 % 60))
+
+    case $hours in
+        0)
+            case $minutes in
+                0)
+                    printf "%ds" $seconds ;;
+                ?)
+                    printf "%dm%02ds" $minutes $seconds ;;
+                *)
+                    printf "%dm" $minutes ;;
+            esac ;;
+        ? | [1-2]?)
+            printf "%dh%02dm" $hours $minutes ;;
+        *)
+            printf "%dh" $hours ;;
+    esac
+}
+
+function preexec() {
+    [[ -z "$timer" ]] && timer="$SECONDS"
+    [[ "$BASH_COMMAND" == "edit-command" ]] && unset timer
+}
+
+function precmd() {
+    local result=$?
+
+    # detect missing newline
+    IFS='[;' read -p $'\e[6n' -d R -rs _ _ COLUMN _
+    [[ $COLUMN == 1 ]] || echo -e "\033[0;7;7m%\033[0m"
+
+    # set terminal name
+    printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "$(dirs +0)"
+
+    # add timer
+    [[ -z "$timer" ]] && return
+    local time=$(fmt-time $(($SECONDS - $timer)))
+    local color=$([[ $result -eq 0 ]] && echo 2 || echo 1)
+    unset timer
+    [[ $time == "0s" ]] && [[ $result -eq 0 ]] && return
+
+    tput sc
+    tput cuu1
+    tput cuf $(($(tput cols) - ${#time} - 1))
+    printf "\033[0;3${color}m ${time}\033[0m\n"
+    tput rc
+}
+
+trap '[[ "$PROMPT_COMMAND" = *"$BASH_COMMAND"* ]] || preexec' DEBUG
+export PROMPT_COMMAND="precmd;$PROMPT_COMMAND"
+
+# fix editor
+function edit-command() {
+    local tmpfile="$(mktemp)"
+    echo "$READLINE_LINE" > "$tmpfile"
+    vim -c 'set filetype=bash' -c "norm ${READLINE_POINT}l" "$tmpfile"
+    READLINE_LINE=$(cat "$tmpfile")
+    READLINE_POINT="${#READLINE_LINE}"
+    rm -f "$tmpfile"
+}
+
+bind -x '"\C-x\C-e":edit-command'
+
+# quick switch jobs
+function prev-job() {
+    local jobs=$(jobs | awk '{ print $1 }' | tr -d '[:punct:-]-')
+    local prev=$(echo "$jobs" | awk '$1 < "'$(echo "$jobs" | grep "+")'"' | tail -n1 | grep -v ^$ || echo "$jobs" | tail -n1 | sed 's/+//g')
+    [[ "$prev" != "" ]] && fg "%$prev" || echo -ne '\033[1A\033[2K'
+    history -d $(history 1)
+}
+
+function next-job() {
+    local jobs=$(jobs | awk '{ print $1 }' | tr -d '[:punct:-]-')
+    local next=$(echo "$jobs" | awk '$1 > "'$(echo "$jobs" | grep "+")'"' | head -n1 | grep -v ^$ || echo "$jobs" | head -n1 | sed 's/+//g')
+    [[ "$next" != "" ]] && fg "%$next" || echo -ne '\033[1A\033[2K'
+    history -d $(history 1)
+}

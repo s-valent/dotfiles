@@ -1,0 +1,5 @@
+.DS_Store
+_*
+ssh
+custom.*
+nvim/lazy_lock.json

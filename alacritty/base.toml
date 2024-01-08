@@ -1,0 +1,34 @@
+[shell]
+program = "/bin/sh"
+args = ["-c", "cd $HOME && exec $SHELL --login"]
+
+[env]
+LANG = "C.UTF-8"
+LC_ALL = "en_US.UTF-8"
+TERM = "xterm-256color"
+
+[window]
+title = "Terminal"
+decorations = "Full"
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
+blur = true
+dynamic_padding = true
+
+[window.padding]
+x = 2
+y = 2
+
+[scrolling]
+history = 100000
+multiplier = 1
+
+[cursor]
+thickness = 0.3
+
+[cursor.style]
+shape = "Block"
+blinking = "Never"
+
+# [terminal]
+# osc52 = "CopyPaste"
