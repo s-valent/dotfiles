@@ -1,0 +1,22 @@
+[font]
+size = 14.8
+
+[font.offset]
+x = 2
+y = 6
+
+[font.glyph_offset]
+y = 2
+
+[font.normal]
+family = "Agave S"
+style = "Regular"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Regular Italic"
+
+[font.bold_italic]
+style = "Bold Italic"

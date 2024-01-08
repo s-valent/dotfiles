@@ -1,0 +1,119 @@
+[[hints.enabled]]
+command = "open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse = { enabled = true, mods = "Alt" }
+binding = { key = "U", mods = "Control|Shift" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u000c"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+command = { program = "/usr/bin/osascript", args = ['-e', 'tell application "System Events" to keystroke "0" using command down', '-e', 'delay 0.1', '-e', 'tell application "System Events" to keystroke "k" using {control down, option down, shift down, command down}'] }
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command | Shift | Alt | Control"
+action = "ClearHistory"
+
+[[keyboard.bindings]]
+action = "SearchForward"
+key = "А"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "Т"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "CreateNewTab"
+key = "Е"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "М"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "С"
+mods = "Command"
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Alt"
+chars = "\u001Bb"
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Alt"
+chars = "\u001Bf"
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Command"
+chars = "\u001BOH"
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Command"
+chars = "\u001BOF"
+
+[[keyboard.bindings]]
+key = "Back"
+mods = "Command"
+chars = "\u0015"
+
+[[keyboard.bindings]]
+key = "Back"
+mods = "Shift | Command"
+chars = "\u000b"
+
+[[keyboard.bindings]]
+key = "Back"
+mods = "Alt"
+chars = "\u001B\u007F"
+
+[[keyboard.bindings]]
+key = "Z"
+mods = "Command"
+chars = "\u001F"
+
+[[keyboard.bindings]]
+key = "Я"
+mods = "Command"
+chars = "\u001F"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control"
+action = "SelectNextTab"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control | Shift"
+action = "SelectPreviousTab"
+
+[[keyboard.bindings]]
+key = "Space"
+mods = "Control"
+chars = "\u0000"
+
+[[keyboard.bindings]]
+key = "["
+mods = "Command"
+command = { program = "/usr/bin/osascript", args = ['-e', 'tell application "System Events" to keystroke "z" using control down', '-e', 'delay 0.1', '-e', 'tell application "System Events" to keystroke "[" using control down'] }
+
+
+[[keyboard.bindings]]
+key = "]"
+mods = "Command"
+command = { program = "/usr/bin/osascript", args = ['-e', 'tell application "System Events" to keystroke "z" using control down', '-e', 'delay 0.1', '-e', 'tell application "System Events" to keystroke "]" using control down'] }

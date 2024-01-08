@@ -1,0 +1,115 @@
+if has('nvim')
+    source ~/.config/nvim/init.lua
+else
+    set noswapfile
+    set number
+    syntax on
+    set encoding=utf-8
+    set splitright
+    set splitbelow
+    set wildmode=list:full
+    set backspace=indent,eol,start
+    try|set fillchars+=eob:\ ,vert:\┃|catch /.*/|endtry
+
+    set mouse=a
+    set ttymouse=sgr
+    try
+    let &t_EI="\e[1 q"
+    let &t_SR="\e[3 q"
+    let &t_SI="\e[5 q"
+    catch /.*/|endtry
+
+    filetype plugin indent on
+    exec "au Filetype * set formatoptions-=cro"
+    set tabstop=4
+    set shiftwidth=4
+    set expandtab
+    set smarttab
+
+    try|colorscheme habamax|catch /.*/|colorscheme elflord|endtry
+    hi MatchParen cterm=none ctermbg=darkgray ctermfg=white
+    hi VertSplit cterm=NONE
+    hi LineNr ctermfg=grey
+    hi EndOfBuffer ctermfg=darkgray
+    hi CursorLineNr cterm=bold ctermbg=237 ctermfg=yellow
+    hi CursorLine cterm=none ctermbg=237
+    set cursorline
+    set display=lastline
+
+    set keymodel=startsel
+    set whichwrap+=<,>,[,]
+    set timeoutlen=80
+
+    nnoremap <silent> <up> gk
+    nnoremap <silent> <down> gj
+    vnoremap <silent> <up> gk
+    vnoremap <silent> <down> gj
+    inoremap <silent> <up> <c-o>gk
+    inoremap <silent> <down> <c-o>gj
+
+    nnoremap <esc>f e
+    vnoremap <esc>b b
+    vnoremap <esc>f e
+    vnoremap <esc>b b
+    inoremap <esc>b <c-o>:call search("\\(\\<\\\|^\\).", "bW")<cr>
+    inoremap <esc>f <left><c-o>:call search(".\\(\\>\\\|$\\)", "W")<cr><right>
+    cnoremap <esc>b <c-left>
+    cnoremap <esc>f <c-right>
+
+    nnoremap <esc>[1;6D vwb
+    nnoremap <esc>[1;4C ve
+    vnoremap <esc>[1;6D b
+    vnoremap <esc>[1;4C e
+    inoremap <esc>[1;6D <esc>vwb
+    inoremap <esc>[1;4C <c-o>ve
+
+    nnoremap <expr> <esc>OH col('.') != 1 ? '0' : '<left>g$'
+    inoremap <esc>OH <c-o>g0
+    vnoremap <esc>OH g0
+
+    nnoremap <expr> <esc>OF col('.') < col('$') - 1 ? 'g$' : '<right>'
+    inoremap <esc>OF <c-o>g$
+    vnoremap <esc>OF g$
+
+    nnoremap <esc><bs> db
+    nnoremap <expr> <c-u> col('.') != 1 ? 'd0' : '<up>dd'
+    inoremap <esc><bs> <c-w>
+    cnoremap <esc><bs> <c-w>
+
+    nnoremap <c-_> u
+    vnoremap <c-_> <esc>u
+    inoremap <c-_> <esc>u
+
+    nnoremap q: <nop>
+    nnoremap <tab> :bnext!<cr>
+    nnoremap <s-tab> :bprev!<cr>
+
+    function SyncClipboard()
+        if v:event.regname == ""
+            exec "silent !printf '\\e]52;c;".system("echo -n ".shellescape(@")." \| openssl base64 -A")."\\a'"
+            redraw
+        endif
+    endfunction
+
+    exec "au TextYankPost * call SyncClipboard()"
+
+    exec "au FileType vim let g:comment = '\"'"
+    exec "au FileType sh,bash,python let g:comment = '#'"
+
+    function Comment()
+        if !exists("g:comment") || empty(g:comment)
+            echoerr "g:comment is not set"
+            return
+        endif
+        let comment = escape(g:comment, '/.*$^~[]"')
+        let lines = getbufline("%", getpos("'<")[1], getpos("'>")[1])
+        if len(filter(lines, 'v:val !~ "^\\s*' . comment . ' "')) == 0
+            execute "'<,'>s/^\\s*\\zs" . comment . " /"
+        else
+            execute "'<,'>s/^/" . comment . " "
+        endif
+    endfunction
+
+    vnoremap gc :<c-u>call Comment()<cr>gv
+    nmap gc vgc<esc>
+endif

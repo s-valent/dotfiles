@@ -1,0 +1,97 @@
+confirm-close-surface = false
+window-save-state = "never"
+window-width = 5000
+window-height = 5000
+window-padding-x = 5
+window-padding-y = 5
+quick-terminal-position = "bottom"
+quick-terminal-animation-duration = 0
+macos-titlebar-style = "transparent"
+
+term = "xterm-256color"
+
+font-family = "Agave S"
+font-thicken = true
+font-style-italic = false
+font-style-bold-italic = false
+font-size = 14.9
+adjust-cell-height = 25%
+adjust-cell-width = 5%
+
+# font-family = "Fira Code"
+# font-family-bold = "Fira Code"
+# font-thicken = true
+# font-style-italic = false
+# font-style-bold-italic = false
+# font-size = 13
+# adjust-cell-height = 25%
+# font-feature = "-calt"
+
+cursor-color =
+cursor-style-blink = true
+cursor-style = "block"
+focus-follows-mouse = true
+adjust-cursor-height = 25%
+adjust-cursor-thickness = 4
+adjust-strikethrough-thickness = 1
+adjust-underline-thickness = 1
+selection-invert-fg-bg = true
+minimum-contrast = 1.1
+
+# keymaps
+macos-option-as-alt = true
+
+keybind = "opt+left=text:\x1Bb"
+keybind = "opt+right=text:\x1Bf"
+keybind = "opt+backspace=text:\x1B\x7F"
+
+keybind = "cmd+left=text:\x1BOH"
+keybind = "cmd+right=text:\x1BOF"
+keybind = "cmd+backspace=text:\x15"
+keybind = "cmd+shift+backspace=text:\x0b"
+
+keybind = "cmd+z=text:\x1F"
+
+keybind = "cmd+q=close_all_windows"
+keybind = "global:ctrl+space=toggle_quick_terminal"
+
+keybind = "cmd+f=write_scrollback_file:open"
+
+# tmux
+command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
+
+keybind = "cmd+k=text:\x0C"
+keybind = "cmd+q=text:\x11q"
+keybind = "cmd+w=text:\x11&"
+keybind = "cmd+f=text:\x11/"
+
+# theme
+background = "2d2d2d"
+foreground = "cccccc"
+cursor-color = "cccccc"
+cursor-text = "2d2d2d"
+
+# black
+palette = 0=#2e2d2d
+palette = 8=#676767
+# red
+palette = 1=#e15a60
+palette = 9=#e15a60
+# green
+palette = 2=#99c794
+palette = 10=#99c794
+# yellow
+palette = 3=#fac863
+palette = 11=#fac863
+# blue
+palette = 4=#6699cc
+palette = 12=#6699cc
+# magenta
+palette = 5=#c594c5
+palette = 13=#c594c5
+# cyan
+palette = 6=#5fb3b3
+palette = 14=#5fb3b3
+# white
+palette = 7=#d4d4d4
+palette = 15=#d4d4d4

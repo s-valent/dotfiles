@@ -1,0 +1,12 @@
+[colors]
+transparent_background_colors = true
+draw_bold_text_with_bright_colors = false
+
+[colors.cursor]
+text = "0x282828"
+
+[colors.primary]
+background = "0x282828"
+
+[colors.selection]
+text = "0x282828"

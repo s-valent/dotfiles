@@ -1,0 +1,22 @@
+[font]
+size = 12.8
+
+[font.offset]
+x = 0
+y = 2
+
+[font.glyph_offset]
+y = 3
+
+[font.normal]
+family = "Monego Nerd Font Fix"
+style = "Regular"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Italic"
+
+[font.bold_italic]
+style = "Bold Italic"
