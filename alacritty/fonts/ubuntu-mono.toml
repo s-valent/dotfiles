@@ -1,0 +1,22 @@
+[font]
+size = 12.8
+
+[font.offset]
+x = 1
+y = 9
+
+[font.glyph_offset]
+y = 5
+
+[font.normal]
+family = "Ubuntu Mono"
+style = "Regular"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Regular Italic"
+
+[font.bold_italic]
+style = "Bold Italic"

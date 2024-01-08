@@ -1,0 +1,22 @@
+[font]
+size = 12.6
+
+[font.offset]
+x = 1
+y = 4
+
+[font.glyph_offset]
+y = 2
+
+[font.normal]
+family = "Menlo"
+style = "Regular"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Italic"
+
+[font.bold_italic]
+style = "Bold Italic"
