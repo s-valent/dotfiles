@@ -1,0 +1,22 @@
+[font]
+size = 12.4
+
+[font.offset]
+x = 0
+y = 2
+
+[font.glyph_offset]
+y = 2
+
+[font.normal]
+family = "Cascadia Code"
+style = "SemiLight"
+
+[font.bold]
+style = "SemiBold"
+
+[font.italic]
+style = "SemiLight Italic"
+
+[font.bold_italic]
+style = "SemiBold Italic"

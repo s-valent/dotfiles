@@ -1,0 +1,5 @@
+[main]
+history_file = ~/.pgcli/history
+log_file = ~/.pgcli/log
+keyring = False
+row_limit = 100
