@@ -87,9 +87,57 @@ return {
     priority = 1000,
     config = function()
       require('catppuccin').setup({
-        flavour = 'frappe',
+        flavor = 'mocha',
+        no_italic = true,
+        -- no_bold = true,
+        color_overrides = {
+          mocha = {
+            rosewater = '#fbd1a9',
+            flamingo = '#768390',
+            pink = '#f99157',
+            mauve = '#c594c5',
+            red = '#e15a60',
+            maroon = '#f2947b',
+            peach = '#fac863',
+            yellow = '#5fb3b3',
+            green = '#99c794',
+            teal = '#5fb3b3',
+            sky = '#768390',
+            sapphire = '#ef7c65',
+            blue = '#6699cc',
+            lavender = '#cccccc',
+            text = '#cccccc',
+            subtext1 = '#babbbb',
+            subtext0 = '#a9a8a9',
+            overlay2 = '#979797',
+            overlay1 = '#858685',
+            overlay0 = '#747374',
+            surface2 = '#626262',
+            surface1 = '#505150',
+            surface0 = '#3f3e3e',
+            base = '#2d2d2d',
+            mantle = '#262524',
+            crust = '#1f1f1d',
+          }
+        },
+        custom_highlights = function(colors)
+        return {
+          [ '@function.builtin' ] = { fg = colors.blue },
+        }
+    end
       })
       vim.cmd.colorscheme('catppuccin')
     end
-  }
+  },
+  {
+    'vague2k/vague.nvim',
+    config = function()
+      require('vague').setup({
+        colors = {
+          bg = "#1d1f20",
+        },
+      })
+      -- vim.cmd.colorscheme('vague')
+    end
+  },
 }

@@ -14,8 +14,8 @@ vim.opt.mousescroll = 'ver:1,hor:1'
 vim.opt.fillchars:prepend({ eob = ' ', vert = '┃' })
 vim.cmd("exec 'au Filetype * set formatoptions-=cro'")
 
-vim.opt.updatetime = 400
-vim.opt.timeoutlen = 400
 vim.opt.termguicolors = true
 vim.opt.hlsearch = true
 vim.g.have_nerd_font = false
+
+vim.keymap.set('n', 'gc', function() vim.cmd.normal('Vgc') end)
