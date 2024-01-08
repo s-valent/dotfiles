@@ -1,0 +1,22 @@
+[font]
+size = 12.9
+
+[font.offset]
+x = 1
+y = 4
+
+[font.glyph_offset]
+y = 2
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[font.bold]
+style = "SemiBold"
+
+[font.italic]
+style = "Retina Italic"
+
+[font.bold_italic]
+style = "SemiBold Italic"

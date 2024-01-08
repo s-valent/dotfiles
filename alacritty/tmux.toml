@@ -1,0 +1,105 @@
+[shell]
+program = "/bin/sh"
+args = ["-c", "(tmux ls | grep -v '(attached)$' && exec /opt/homebrew/bin/tmux attach) || exec /opt/homebrew/bin/tmux new"]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "None"
+
+[[keyboard.bindings]]
+key = "Space"
+mods = "Control"
+chars = "\u0000"
+
+# tmux
+[[keyboard.bindings]]
+key = "`"
+mods = "Control"
+chars = "\u001B[24;5~"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control"
+chars = "\u001B[24;5~n"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Control | Shift"
+chars = "\u001B[24;5~p"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Alt"
+chars = "\u001B[24;5~n"
+
+[[keyboard.bindings]]
+key = "Tab"
+mods = "Alt | Shift"
+chars = "\u001B[24;5~p"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+chars = "\u001B[24;5~c"
+
+[[keyboard.bindings]]
+key = "-"
+mods = "Command"
+chars = "\u001B[24;5~\""
+
+[[keyboard.bindings]]
+key = "="
+mods = "Command"
+chars = "\u001B[24;5~%"
+
+[[keyboard.bindings]]
+key = "F"
+mods = "Command"
+chars = "\u001B[24;5~/"
+
+[[keyboard.bindings]]
+key = "1"
+mods = "Command"
+chars = "\u001B[24;5~1"
+
+[[keyboard.bindings]]
+key = "2"
+mods = "Command"
+chars = "\u001B[24;5~2"
+
+[[keyboard.bindings]]
+key = "3"
+mods = "Command"
+chars = "\u001B[24;5~3"
+
+[[keyboard.bindings]]
+key = "4"
+mods = "Command"
+chars = "\u001B[24;5~4"
+
+[[keyboard.bindings]]
+key = "5"
+mods = "Command"
+chars = "\u001B[24;5~5"
+
+[[keyboard.bindings]]
+key = "6"
+mods = "Command"
+chars = "\u001B[24;5~6"
+
+[[keyboard.bindings]]
+key = "7"
+mods = "Command"
+chars = "\u001B[24;5~7"
+
+[[keyboard.bindings]]
+key = "8"
+mods = "Command"
+chars = "\u001B[24;5~8"
+
+[[keyboard.bindings]]
+key = "9"
+mods = "Command"
+chars = "\u001B[24;5~9"

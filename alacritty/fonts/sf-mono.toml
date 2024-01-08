@@ -1,0 +1,22 @@
+[font]
+size = 12.5
+
+[font.offset]
+x = 0
+y = 2
+
+[font.glyph_offset]
+y = 1
+
+[font.normal]
+family = "SF Mono"
+style = "Medium"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Medium Italic"
+
+[font.bold_italic]
+style = "Bold Italic"

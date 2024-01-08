@@ -1,0 +1,74 @@
+# ui
+"ui.menu" = { fg = "white", bg = "black" }
+"ui.menu.selected" = { modifiers = ["reversed"] }
+"ui.linenr" = "gray"
+"ui.popup" = { fg = "white", bg = "black" }
+"ui.linenr.selected" = "silver"
+"ui.selection" = { bg = "dim" }
+"ui.selection.primary" = { fg = "white", bg = "dim" }
+"ui.statusline" = { fg = "white", bg = "gray" }
+"ui.statusline.inactive" = { fg = "silver", bg = "dim" }
+"ui.statusline.normal" = { fg = "dark", bg = "green" }
+"ui.statusline.insert" = { fg = "dark", bg = "blue" }
+"ui.statusline.select" = { fg = "dark", bg = "orange" }
+"ui.cursor" = { fg = "coal", bg = "white" }
+"ui.cursor.insert" = { fg = "white", modifiers = ["reversed"] }
+"ui.cursor.match" = { bg = "gray", fg = "yellow" }
+"ui.help" = { fg = "white", bg = "black" }
+
+"diagnostic" = { modifiers = ["underlined"] }
+"info" = "blue"
+"hint" = "green"
+"debug" = "gray"
+"warning" = "yellow"
+"error" = "red"
+
+# color scopes
+"attribute" = "white"
+"type" = "cyan"
+"constructor" = "blue"
+"constant" = "yellow"
+"string" = "green"
+"string.regexp" = "orange"
+"string.special" = "orange"
+"comment" = "silver"
+"variable" = "white"
+"variable.builtin" = "red"
+"variable.parameter" = "orange"
+"label" = "yellow"
+"punctuation" = "silver"
+"keyword" = "magenta"
+"operator" = "silver"
+"function" = "blue"
+"tag" = "red"
+"namespace" = "white"
+
+"markup.heading" = "blue"
+"markup.list" = "red"
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.link.url" = { fg = "blue", modifiers = ["underlined"] }
+"markup.link.text" = "red"
+"markup.quote" = "cyan"
+"markup.raw" = "green"
+
+"diff.plus" = "green"
+"diff.delta" = "yellow"
+"diff.minus" = "red"
+
+[palette]
+black = "#292929"
+dark = "#2d2d2d"
+dim = "#3c3c3c"
+gray = "#484848"
+coal = "#676767"
+silver = "#999999"
+white = "#cccccc"
+red = "#f2777a"
+orange = "#e58755"
+yellow = "#ffcc66"
+blue = "#6699cc"
+charcoal = "#36454f"
+green = "#99cc99"
+cyan = "#66b8cc"
+magenta = "#cc99cc"
