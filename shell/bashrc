@@ -1,0 +1,177 @@
+HISTCONTROL="erasedups:ignorespace"
+HISTSIZE=1000000 HISTFILESIZE=1000000
+HISTIGNORE="&:ls:[bf]g:exit"
+HISTTIMEFORMAT='%F %T '
+SHELL_SESSION_HISTORY=0
+shopt -s histappend
+shopt -s cmdhist lithist
+shopt -u progcomp  # don't unfold dirs on tab
+export HISTFILE="${HOME}/.history"
+
+export EDITOR=vim
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+export PROMPT_COMMAND="history -a;history -c;history -r"
+export BAT_THEME='base16'
+export LESS="-XRFS"
+
+export PS1="\[\033[1m\033[38;5;8m\]\W \[\e[1;37m\]→ \[\e[0m\]"
+if [[ "$SSH_CLIENT" != "" ]]; then
+    export PS1="\[\\033[1;32m\\]\h\[\e[0m\]:$PS1"
+fi
+
+# aliases
+which pbcopy &> /dev/null || alias pbcopy='printf "\e]52;c;"$(openssl base64 -A)"\a"'
+alias brew-up="brew update && brew upgrade; brew cleanup --prune=all"
+alias clear="printf '\33c\e[3J\e[1 q'"
+alias pip="python -m pip"
+alias mkdir="mkdir -pv"
+alias grep="grep --color=auto"
+alias ls="ls -h --color=auto"
+alias la="ls -hA --color=auto"
+alias ll="ls -hla --color=auto"
+alias cp="cp -i"
+alias ln="ln -i"
+alias mv="mv -i"
+alias c="clear"
+alias v="nvim"
+
+alias docker-kill="docker ps -aq | xargs -I{} docker stop {} && docker network prune -f"
+alias docker-prune="docker system prune -af"
+alias dc="docker compose"
+alias db="nvim +':DBUI'"
+
+function caffeinate-hours() {
+    caffeinate -t $((60 * 60 * "$1")) -d&
+}
+
+function code-reload() {
+    ([[ "$SSH_CLIENT" == "" ]] && lsof | grep "Code Helper" | cut -d" " -f2 || pgrep -f vscode-server) | xargs -r kill
+}
+
+if [[ $- == *i* ]]; then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+fi
+
+if [[ "$OSTYPE" == darwin* ]]; then
+    alias sed="gsed"
+    [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+fi
+
+function app-id() {
+    osascript -e 'id of app "'$1'"'
+}
+
+function cdf() {
+    local dest=$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)' 2> /dev/null)
+    [[ "$dest" != "/" ]] && cd "$dest"
+}
+
+function ql() {
+    qlmanage -p "$1" > /dev/null
+}
+
+function curl() {
+    if $(echo "$@" | grep -iq '\bcontent-type\b'); then
+        /usr/bin/curl "$@"
+    else
+        /usr/bin/curl -H 'Content-type: application/json' "$@"
+    fi
+}
+
+function rs() {
+    rg -l "$@" | while IFS=\n read file; do
+        rg "$@" --passthru "$file" | sponge "$file"
+    done
+}
+
+# show how much time operation took
+function fmt-time() {
+    local hours=$(($1 / 3600))
+    local minutes=$((($1 % 3600) / 60))
+    local seconds=$(($1 % 60))
+
+    case $hours in
+        0)
+            case $minutes in
+                0)
+                    printf "%ds" $seconds ;;
+                ?)
+                    printf "%dm%02ds" $minutes $seconds ;;
+                *)
+                    printf "%dm" $minutes ;;
+            esac ;;
+        ? | [1-2]?)
+            printf "%dh%02dm" $hours $minutes ;;
+        *)
+            printf "%dh" $hours ;;
+    esac
+}
+
+function preexec() {
+    timer="$SECONDS"
+}
+
+if [[ $- == *i* ]]; then
+    bind -x '"\C-x\C-j": should_call_preexec=true'
+    bind '"\C-m": "\C-x\C-j\C-j"'
+    trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
+fi
+
+function precmd() {
+    local result=$?
+
+    # detect missing newline
+    IFS='[;' read -p $'\e[6n' -d R -rs _ _ COLUMN _
+    [[ $COLUMN == 1 ]] || echo -e "\033[0;7;7m%\033[0m"
+
+    # set terminal name
+    printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "$(dirs +0)"
+    printf "\x1b[1 q"
+
+    # add timer
+    [[ -z "$timer" ]] && return
+    local time=$(fmt-time $(($SECONDS - $timer)))
+    local color=$([[ $result -eq 0 ]] && echo 2 || echo 1)
+    unset timer
+    [[ $time == "0s" ]] && [[ $result -eq 0 ]] && return
+
+    tput sc
+    tput cuu1
+    tput cuf $(($(tput cols) - ${#time} - 1))
+    printf "\033[0;3${color}m ${time}\033[0m\n"
+    tput rc
+}
+
+export PROMPT_COMMAND="precmd;$PROMPT_COMMAND"
+
+# fix editor
+function edit-command() {
+    local tmpfile="$(mktemp)"
+    echo "$READLINE_LINE" > "$tmpfile"
+    vim -c 'set filetype=bash' -c "norm ${READLINE_POINT}l" "$tmpfile"
+    READLINE_LINE=$(cat "$tmpfile")
+    READLINE_POINT="${#READLINE_LINE}"
+    rm -f "$tmpfile"
+}
+
+if [[ $- == *i* ]]; then
+    bind -x '"\C-e": edit-command'
+    bind -x '"\C-x\C-e": edit-command'
+fi
+
+# quick switch jobs
+function prev-job() {
+    local jobs=$(jobs | awk '{ print $1 }' | tr -d '[:punct:-]-')
+    local prev=$(echo "$jobs" | awk '$1 < "'$(echo "$jobs" | grep "+")'"' | tail -n1 | grep -v ^$ || echo "$jobs" | tail -n1 | sed 's/+//g')
+    [[ "$prev" != "" ]] && fg "%$prev" || echo -ne '\033[1A\033[2K'
+    history -d $(history 1)
+}
+
+function next-job() {
+    local jobs=$(jobs | awk '{ print $1 }' | tr -d '[:punct:-]-')
+    local next=$(echo "$jobs" | awk '$1 > "'$(echo "$jobs" | grep "+")'"' | head -n1 | grep -v ^$ || echo "$jobs" | head -n1 | sed 's/+//g')
+    [[ "$next" != "" ]] && fg "%$next" || echo -ne '\033[1A\033[2K'
+    history -d $(history 1)
+}

@@ -1,0 +1,36 @@
+[terminal.shell]
+program = "/bin/sh"
+args = ["-c", "cd $HOME && exec $SHELL -l"]
+
+[env]
+LANG = "C.UTF-8"
+LC_ALL = "en_US.UTF-8"
+TERM = "xterm-256color"
+
+[window]
+title = "Terminal"
+decorations = "Full"
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
+dynamic_padding = true
+# blur = true
+# opacity = 0.95
+
+[window.dimensions]
+columns = 200
+lines = 200
+
+[window.padding]
+x = 4
+y = 4
+
+[scrolling]
+history = 100000
+multiplier = 1
+
+[cursor]
+thickness = 0.3
+
+[cursor.style]
+shape = "Block"
+blinking = "Never"

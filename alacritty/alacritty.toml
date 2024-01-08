@@ -1,0 +1,8 @@
+[general]
+import = [
+    "~/.config/alacritty/base.toml",
+    "~/.config/alacritty/keybindings.toml",
+    "~/.config/alacritty/fonts/agave.toml",
+    "~/.config/alacritty/themes/tomorrow-night.toml",
+    # "~/.config/alacritty/tmux.toml",
+]

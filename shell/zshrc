@@ -1,0 +1,112 @@
+export HISTFILE="${HOME}/.history"
+export PROMPT='%B%F{8}%1~ %f→ %b'
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+export SHELL_SESSIONS_DISABLE="1"
+
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
+# arrow keys show history
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
+
+# option + arrows
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
+# open editor to modify commands
+bindkey -e
+export EDITOR=vim
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
+# word separators from bash
+autoload -U select-word-style
+select-word-style bash
+
+# aliases
+alias mkdir="mkdir -pv"
+alias ls="ls -h --color"
+alias la="ls -hA --color"
+alias ll="ls -hla --color"
+alias cp="cp -i"
+alias ln="ln -i"
+alias mv="mv -i"
+alias c="clear"
+
+alias sed="gsed"
+
+function app-id() {
+    osascript -e 'id of app "'$1'"'
+}
+
+function cdf() {
+    local script='tell app "Finder" to POSIX path of (insertion location as alias)'
+    local target=$(osascript -e "$script" 2> /dev/null)
+    [[ "$target" != "/" ]] && cd $target
+}
+
+# show time that each operation took
+function fmt-time() {
+    local hours=$(($1 / 3600))
+    local minutes=$((($1 % 3600) / 60))
+    local seconds=$(($1 % 60))
+
+    case $hours in
+        0)
+            case $minutes in
+                0)
+                    printf "%ds" $seconds ;;
+                ?)
+                    printf "%dm%02ds" $minutes $seconds ;;
+                *)
+                    printf "%dm" $minutes ;;
+            esac ;;
+        ? | [1-2]?)
+            printf "%dh%02dm" $hours $minutes ;;
+        *)
+            printf "%dh" $hours ;;
+    esac
+}
+
+function update-title() {
+    printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "${PWD/#$HOME/~}"
+}
+
+function preexec() {
+    timer=${timer:-$SECONDS}
+}
+
+function precmd() {
+    local result=$?
+    [[ -z "$timer" ]] && return
+
+    local time=$(fmt-time $(($SECONDS - $timer)))
+    local color=$([[ $result -eq 0 ]] && echo 2 || echo 1)
+    unset timer
+    [[ $time == "0s" ]] && [[ $result -eq 0 ]] && return
+
+    tput sc
+    tput cuu1
+    tput cuf $(($COLUMNS - ${#time} - 1))
+    printf "\033[0;3${color}m ${time}\033[0m\n"
+    tput rc
+}
+
+# completions
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
