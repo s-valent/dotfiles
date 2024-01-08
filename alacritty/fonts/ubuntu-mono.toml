@@ -1,0 +1,23 @@
+[font]
+size = 14.2
+
+[font.offset]
+x = 1
+y = 7
+
+[font.glyph_offset]
+y = 4
+
+[font.normal]
+# family = "Ubuntu Mono"
+family = "Ubuntu Sans Mono"
+style = "Regular"
+
+[font.bold]
+style = "Bold"
+
+[font.italic]
+style = "Regular Italic"
+
+[font.bold_italic]
+style = "Bold Italic"

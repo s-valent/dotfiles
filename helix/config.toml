@@ -1,0 +1,40 @@
+theme = "tomorrow-night"
+
+[editor]
+mouse = true
+shell = ["bash", "-lc"]
+scroll-lines = 1
+completion-trigger-len = 1
+true-color = true
+# bufferline = "always"
+color-modes = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+
+[editor.file-picker]
+hidden = true
+
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+
+[editor.statusline.mode]
+normal = "NORMAL"
+insert = "INSERT"
+select = "SELECT"
+
+# [editor.inline-diagnostics]
+# cursor-line = "hint"
+# other-lines = "warning"
+
+[keys.normal]
+A-b = "move_prev_word_start"
+A-f = ["move_next_word_end", "move_char_right"]
+
+[keys.insert]
+A-b = "move_prev_word_start"
+A-f = ["move_next_word_end", "move_char_right"]
