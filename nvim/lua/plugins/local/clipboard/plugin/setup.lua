@@ -17,8 +17,10 @@ if vim.env.SSH_TTY and not is_tmux_session then
       ['*'] = osc52.copy('*'),
     },
     paste = {
-      ['+'] = paste,
-      ['*'] = paste,
+      -- ['+'] = paste,
+      -- ['*'] = paste,
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
     },
   }
 end

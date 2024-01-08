@@ -8,6 +8,8 @@ return {
         '??',
         function()
           require('which-key').show({ global = false })
+          vim.opt.updatetime = 0
+          vim.opt.timeoutlen = 0
         end,
         desc = 'Buffer Local Keymaps (which-key)',
       }
