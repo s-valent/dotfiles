@@ -22,7 +22,8 @@ fi
 
 # aliases
 which pbcopy &> /dev/null || alias pbcopy='printf "\e]52;c;"$(openssl base64 -A)"\a"'
-alias clear="printf '\33c\e[3J\e[2 q'"
+alias brew-up="brew update && brew upgrade; brew cleanup --prune=all"
+alias clear="printf '\33c\e[3J\e[1 q'"
 alias pip="python -m pip"
 alias mkdir="mkdir -pv"
 alias grep="grep --color=auto"
@@ -38,6 +39,11 @@ alias v="nvim"
 alias docker-kill="docker ps -aq | xargs -I{} docker stop {} && docker network prune -f"
 alias docker-prune="docker system prune -af"
 alias dc="docker compose"
+alias db="nvim +':DBUI'"
+
+function caffeinate-hours() {
+    caffeinate -t $((60 * 60 * "$1")) -d& > /dev/null 2>&1
+}
 
 function code-reload() {
     ([[ "$SSH_CLIENT" == "" ]] && lsof | grep "Code Helper" | cut -d" " -f2 || pgrep -f vscode-server) | xargs -r kill
@@ -107,9 +113,11 @@ function preexec() {
     timer="$SECONDS"
 }
 
-bind -x '"\C-x\C-j": should_call_preexec=true'
-bind '"\C-m": "\C-x\C-j\C-j"'
-trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
+if [[ $- == *i* ]]; then
+    bind -x '"\C-x\C-j": should_call_preexec=true'
+    bind '"\C-m": "\C-x\C-j\C-j"'
+    trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
+fi
 
 function precmd() {
     local result=$?
@@ -120,6 +128,7 @@ function precmd() {
 
     # set terminal name
     printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "$(dirs +0)"
+    printf "\x1b[1 q"
 
     # add timer
     [[ -z "$timer" ]] && return
@@ -147,8 +156,10 @@ function edit-command() {
     rm -f "$tmpfile"
 }
 
-bind -x '"\C-e": edit-command'
-bind -x '"\C-x\C-e": edit-command'
+if [[ $- == *i* ]]; then
+    bind -x '"\C-e": edit-command'
+    bind -x '"\C-x\C-e": edit-command'
+fi
 
 # quick switch jobs
 function prev-job() {
@@ -164,6 +175,3 @@ function next-job() {
     [[ "$next" != "" ]] && fg "%$next" || echo -ne '\033[1A\033[2K'
     history -d $(history 1)
 }
-
-bind -x '"\C-[": prev-job'
-bind -x '"\C-]": next-job'

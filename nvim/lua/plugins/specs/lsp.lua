@@ -36,6 +36,10 @@ return {
       return false
     end
 
+    if vim.g.vscode then
+      return
+    end
+
     vim.api.nvim_create_autocmd('LspAttach', {
       desc = 'LSP Actions',
       callback = function(event)
@@ -60,18 +64,9 @@ return {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.name == 'ruff' then
           client.server_capabilities.hoverProvider = false
-          local skip_file = true
-          for _, path in pairs(ruff_paths) do
-            if vim.startswith(vim.api.nvim_buf_get_name(event.buf), path) then
-              skip_file = false
-            end
-          end
-          if skip_file then
-            for key, value in pairs(client.server_capabilities) do
-              if value == true then
-                client.server_capabilities[key] = false
-              end
-            end
+          if not should_use_ruff(vim.api.nvim_buf_get_name(event.buf)) then
+            -- vim.lsp.buf_detach_client(event.buf, event.data.client_id)
+            client.stop()
           end
         end
 
@@ -79,7 +74,7 @@ return {
           vim.lsp.handlers.signature_help,
           { border = 'single', focusable = false }
         )
-        
+
         -- hightlight similar
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -165,34 +160,27 @@ return {
         end,
       },
       mapping = {
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
             fallback()
           end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<down>"] = cmp.mapping(function(fallback)
+        end, { 'i', 's' }),
+        ['<down>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
             fallback()
           end
-        end, { "i", "s" }),
-        ["<up>"] = cmp.mapping(function(fallback)
+        end, { 'i', 's' }),
+        ['<up>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, { 'i', 's' }),
         ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
         ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -201,6 +189,8 @@ return {
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
         }),
+        ['<Esc>'] = cmp.mapping.abort(),
+        ['<C-c>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
       }
     })
