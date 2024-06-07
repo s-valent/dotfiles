@@ -56,9 +56,12 @@ function fmt-time() {
 }
 
 function preexec() {
-    [[ -z "$timer" ]] && timer="$SECONDS"
-    [[ "$BASH_COMMAND" == "edit-command" ]] && unset timer
+    timer="$SECONDS"
 }
+
+bind -x '"\C-x\C-j": should_call_preexec=true'
+bind '"\C-m": "\C-x\C-j\C-j"'
+trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
 
 function precmd() {
     local result=$?
@@ -84,7 +87,6 @@ function precmd() {
     tput rc
 }
 
-trap '[[ "$PROMPT_COMMAND" = *"$BASH_COMMAND"* ]] || preexec' DEBUG
 export PROMPT_COMMAND="precmd;$PROMPT_COMMAND"
 
 # fix editor
@@ -97,7 +99,7 @@ function edit-command() {
     rm -f "$tmpfile"
 }
 
-bind -x '"\C-x\C-e":edit-command'
+bind -x '"\C-x\C-e": edit-command'
 
 # quick switch jobs
 function prev-job() {
