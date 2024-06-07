@@ -256,6 +256,14 @@
         "when": "terminalFocus"
     },
     {
+        "key": "alt+backspace",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001B\u007F"
+        },
+        "when": "terminalFocus"
+    },
+    {
         "key": "cmd+z",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
