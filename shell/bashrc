@@ -7,6 +7,7 @@ shopt -u progcomp  # don't unfold dirs on tab
 
 export EDITOR=vim
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
 export PROMPT_COMMAND="history -a;history -c;history -r"
 
 export PS1="\[\033[1m\033[38;5;8m\]\W \[\e[1;37m\]→ \[\e[0m\]"
