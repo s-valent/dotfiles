@@ -1,6 +1,6 @@
 [shell]
 program = "/bin/sh"
-args = ["-c", "cd $HOME && exec $SHELL --login"]
+args = ["-c", "cd $HOME && exec $SHELL -l"]
 
 [env]
 LANG = "C.UTF-8"
@@ -14,6 +14,7 @@ startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
 blur = true
 dynamic_padding = true
+opacity = 0.95
 
 [window.padding]
 x = 2
