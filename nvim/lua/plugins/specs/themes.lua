@@ -99,7 +99,7 @@ return {
             red = '#e15a60',
             maroon = '#f2947b',
             peach = '#fac863',
-            yellow = '#5fb3b3',
+            yellow = '#f99157',
             green = '#99c794',
             teal = '#5fb3b3',
             sky = '#768390',
@@ -123,6 +123,20 @@ return {
         custom_highlights = function(colors)
         return {
           [ '@function.builtin' ] = { fg = colors.blue },
+          [ '@type' ] = { fg = colors.teal },
+          [ '@type.builtin' ] = { fg = colors.blue },
+          [ '@type.builtin.c' ] = { fg = colors.teal },
+          [ '@constructor' ] = { fg = colors.blue },
+          [ '@variable.parameter' ] = { fg = colors.pink },
+          [ '@string.documentation' ] = { fg = colors.sky },
+          [ 'Function' ] = { fg = colors.blue, bold = true },
+          [ '@function.call' ] = { fg = colors.blue },
+          [ '@function.method.call' ] = { fg = colors.blue },
+          [ '@attribute' ] = { fg = colors.blue },
+          [ '@attribute.builtin.python' ] = { fg = colors.blue },
+          [ 'Special' ] = { fg = colors.red },
+          [ 'pythonBuiltin' ] = { fg = colors.text }
+            
         }
     end
       })

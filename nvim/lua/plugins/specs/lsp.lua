@@ -1,5 +1,5 @@
 local function fetch_ruff_paths()
-  local filepath = vim.fn.stdpath('config') .. '/_ruff-paths.txt'
+  local filepath = vim.fn.stdpath('config') .. '/_ruff'
   local contents = vim.fn.system({'cat', filepath})
   local paths = {}
   for value in contents:gmatch('[^\n]+') do
@@ -11,6 +11,63 @@ local function fetch_ruff_paths()
   return paths
 end
 
+local should_use_ruff = function(filename)
+  local ruff_paths = fetch_ruff_paths()
+  for _, path in pairs(ruff_paths) do
+    if vim.startswith(filename, path) then
+        return true
+      end
+  end
+  return false
+end
+
+local function patch_lsp_diagnostics(handler, per_line)
+  return {
+    show = function(ns, bufnr, diagnostics, opts)
+      local ns_name = vim.diagnostic.get_namespace(ns).name
+      local file = vim.api.nvim_buf_get_name(bufnr)
+
+      if not vim.startswith(ns_name, 'vim.lsp.') then
+        handler.show(ns, bufnr, diagnostics, opts)
+        return
+      end
+
+      local use_ruff = should_use_ruff(file)
+
+      local diagnostics = vim.tbl_filter(
+        function(d)
+          local ns_name = vim.diagnostic.get_namespace(d.namespace).name
+          local is_lsp = vim.startswith(ns_name, 'vim.lsp.')
+          local ruff_err = d.source == 'Ruff' and not use_ruff
+          return is_lsp and not ruff_err
+        end,
+        vim.diagnostic.get(bufnr)
+      )
+      if per_line == true or per_line == nil then
+        local max_severity_per_line = {}
+        for _, d in pairs(diagnostics) do
+          if (d._tags or {}).unnecessary ~= true then
+            local m = max_severity_per_line[d.lnum]
+            if not m or d.severity < m.severity then
+              max_severity_per_line[d.lnum] = d
+            end
+          end
+        end
+        diagnostics = vim.tbl_values(max_severity_per_line)
+      end
+
+      local filtered_diagnostics = vim.tbl_filter(
+        function(val)
+          return val.namespace == ns
+        end,
+        diagnostics
+      )
+      handler.show(ns, bufnr, filtered_diagnostics, opts)
+    end,
+    hide = handler.hide,
+  }
+end
+
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
@@ -19,22 +76,9 @@ return {
     { 'hrsh7th/cmp-nvim-lsp', lazy = false },
   },
   config = function()
-    local lspconfig_defaults = require('lspconfig').util.default_config
-    lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-      'force',
-      lspconfig_defaults.capabilities,
-      require('cmp_nvim_lsp').default_capabilities()
-    )
-
-    local ruff_paths = fetch_ruff_paths()
-    local should_use_ruff = function(filename)
-      for _, path in pairs(ruff_paths) do
-        if vim.startswith(filename, path) then
-          return true
-        end
-      end
-      return false
-    end
+    vim.diagnostic.handlers.signs = patch_lsp_diagnostics(vim.diagnostic.handlers.signs, false)
+    vim.diagnostic.handlers.virtual_text = patch_lsp_diagnostics(vim.diagnostic.handlers.virtual_text)
+    vim.diagnostic.handlers.underline = patch_lsp_diagnostics(vim.diagnostic.handlers.underline, false)
 
     if vim.g.vscode then
       return
@@ -64,10 +108,6 @@ return {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.name == 'ruff' then
           client.server_capabilities.hoverProvider = false
-          if not should_use_ruff(vim.api.nvim_buf_get_name(event.buf)) then
-            -- vim.lsp.buf_detach_client(event.buf, event.data.client_id)
-            client.stop()
-          end
         end
 
         vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
@@ -77,7 +117,7 @@ return {
 
         -- hightlight similar
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-          local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+          local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
             group = highlight_augroup,
@@ -97,22 +137,22 @@ return {
           })
 
           vim.api.nvim_create_autocmd('LspDetach', {
-            group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-            callback = function(event2)
+            group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+            callback = function(event)
               vim.lsp.buf.clear_references()
-              vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+              vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event.buf }
             end,
           })
         end
       end
     })
 
-    local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
+    local signs = { ERROR = 'E', WARN = 'W', INFO = 'I', HINT = 'H' }
     local diagnostic_signs = {}
     for type, icon in pairs(signs) do
       diagnostic_signs[vim.diagnostic.severity[type]] = icon
     end
-    vim.diagnostic.config { signs = { text = diagnostic_signs }, update_in_insert = true }
+    vim.diagnostic.config { signs = { text = diagnostic_signs }, update_in_insert = true, severity_sort = true }
     vim.opt.signcolumn = 'yes'
 
     local config = require('lspconfig')
@@ -150,6 +190,34 @@ return {
     })
 
     local cmp = require('cmp')
+    local mapping = {
+      ['<down>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<up>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<c-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
+      ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
+      ['<c-y>'] = cmp.config.disable,
+      ['<c-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<c-c>'] = cmp.mapping.abort(),
+      ['<cr>'] = cmp.mapping.confirm({ select = true }),
+    }
+    mapping['<tab>'] = mapping['<down>']
+    mapping['<s-tab>'] = mapping['<up>']
+
     cmp.setup({
       sources = {
         { name = 'nvim_lsp' },
@@ -159,40 +227,7 @@ return {
           vim.snippet.expand(args.body)
         end,
       },
-      mapping = {
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<down>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<up>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-        ['<C-y>'] = cmp.config.disable,
-        ['<C-e>'] = cmp.mapping({
-          i = cmp.mapping.abort(),
-          c = cmp.mapping.close(),
-        }),
-        ['<Esc>'] = cmp.mapping.abort(),
-        ['<C-c>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      }
+      mapping = mapping,
     })
 
     vim.lsp.set_log_level('error')
