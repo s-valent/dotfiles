@@ -1,25 +1,4 @@
-local function fetch_ruff_paths()
-  local filepath = vim.fn.stdpath('config') .. '/_ruff'
-  local contents = vim.fn.system({'cat', filepath})
-  local paths = {}
-  for value in contents:gmatch('[^\n]+') do
-    local path = vim.fn.resolve(vim.fn.expand(value))
-    if path ~= '' then
-      table.insert(paths, path)
-    end
-  end
-  return paths
-end
-
-local should_use_ruff = function(filename)
-  local ruff_paths = fetch_ruff_paths()
-  for _, path in pairs(ruff_paths) do
-    if vim.startswith(filename, path) then
-        return true
-      end
-  end
-  return false
-end
+local is_file_valid = require('config.utils').is_file_valid
 
 local function patch_lsp_diagnostics(handler, per_line)
   return {
@@ -32,7 +11,7 @@ local function patch_lsp_diagnostics(handler, per_line)
         return
       end
 
-      local use_ruff = should_use_ruff(file)
+      local use_ruff = is_file_valid(file, '_ruff')
 
       local diagnostics = vim.tbl_filter(
         function(d)
@@ -76,7 +55,7 @@ return {
     { 'hrsh7th/cmp-nvim-lsp', lazy = false },
   },
   config = function()
-    vim.diagnostic.handlers.signs = patch_lsp_diagnostics(vim.diagnostic.handlers.signs, false)
+    vim.diagnostic.handlers.signs = patch_lsp_diagnostics(vim.diagnostic.handlers.signs)
     vim.diagnostic.handlers.virtual_text = patch_lsp_diagnostics(vim.diagnostic.handlers.virtual_text)
     vim.diagnostic.handlers.underline = patch_lsp_diagnostics(vim.diagnostic.handlers.underline, false)
 
@@ -168,18 +147,24 @@ return {
     function find_python_root(filename)
       local found = require('lspconfig.util').root_pattern(python_root_files)(filename)
       local fallback = vim.fs.dirname(filename)
-      return found or fallback
+      if not found or not vim.startswith(found, vim.fn.expand('~')) then
+        found = fallback
+      end
+      return found
     end
 
     config.pyright.setup({
       settings = {
+        single_file_support = true,
         pyright = {
           disableOrganizeImports = true,
         },
         python = {
           analysis = {
+            autoSearchPaths = true,
             typeCheckingMode = 'off',
             diagnosticMode = 'workspace',
+            useLibraryCodeForTypes = true,
           }
         }
       },
@@ -228,6 +213,9 @@ return {
         end,
       },
       mapping = mapping,
+      matching = {
+        disallow_prefix_unmatching = true,
+      }
     })
 
     vim.lsp.set_log_level('error')

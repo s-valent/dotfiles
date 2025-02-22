@@ -40,8 +40,8 @@ vnoremap <c-_> <esc>u
 inoremap <c-_> <esc>u
 
 nnoremap q: <nop>
-nnoremap <c-,> :bnext!<cr>
-nnoremap <c-.> :bprev!<cr>
-inoremap <c-,> <c-o>:bnext!<cr>
-inoremap <c-.> <c-o>:bprev!<cr>
+nnoremap <c-,> :bprev!<cr>
+nnoremap <c-.> :bnext!<cr>
+inoremap <c-,> <c-o>:bprev!<cr>
+inoremap <c-.> <c-o>:bnext!<cr>
 ]])

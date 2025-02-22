@@ -19,6 +19,14 @@ vim.opt.termguicolors = true
 vim.opt.hlsearch = true
 vim.g.have_nerd_font = false
 
+-- works well only with which-key
+vim.opt.updatetime = 0
+vim.opt.timeoutlen = 0
+
+-- comment
+vim.keymap.del('n', 'gcc')
 vim.keymap.set('n', 'gc', function() vim.cmd.normal('Vgc') end)
+
+-- quicklist jumps
 vim.keymap.set('n', '<m-up>', ':cp<cr>')
 vim.keymap.set('n', '<m-down>', ':cn<cr>')

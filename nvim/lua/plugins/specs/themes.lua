@@ -89,7 +89,7 @@ return {
       require('catppuccin').setup({
         flavor = 'mocha',
         no_italic = true,
-        -- no_bold = true,
+        no_bold = true,
         color_overrides = {
           mocha = {
             rosewater = '#fbd1a9',
@@ -135,8 +135,11 @@ return {
           [ '@attribute' ] = { fg = colors.blue },
           [ '@attribute.builtin.python' ] = { fg = colors.blue },
           [ 'Special' ] = { fg = colors.red },
-          [ 'pythonBuiltin' ] = { fg = colors.text }
-            
+          [ 'pythonBuiltin' ] = { fg = colors.text },
+          [ 'Visual' ] = { bg = '#264f78' },
+          [ 'LspReferenceText' ] = { bg = '#3a3a3a' },
+          [ 'LspReferenceRead' ] = { bg = '#414b3e' },
+          [ 'LspReferenceWrite' ] = { bg = '#543f33' },
         }
     end
       })
