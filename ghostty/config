@@ -61,9 +61,9 @@ keybind = "cmd+f=write_scrollback_file:open"
 command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
 
 keybind = "cmd+k=text:\x0C"
-keybind = "cmd+q=text:\x11q"
-keybind = "cmd+w=text:\x11&"
-keybind = "cmd+f=text:\x11/"
+keybind = "cmd+q=text:\x13q"
+keybind = "cmd+w=text:\x13&"
+keybind = "cmd+f=text:\x13/"
 
 # theme
 background = "2d2d2d"

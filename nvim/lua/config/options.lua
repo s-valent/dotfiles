@@ -20,3 +20,5 @@ vim.opt.hlsearch = true
 vim.g.have_nerd_font = false
 
 vim.keymap.set('n', 'gc', function() vim.cmd.normal('Vgc') end)
+vim.keymap.set('n', '<m-up>', ':cp<cr>')
+vim.keymap.set('n', '<m-down>', ':cn<cr>')
