@@ -140,8 +140,11 @@ return {
           [ 'LspReferenceText' ] = { bg = '#3a3a3a' },
           [ 'LspReferenceRead' ] = { bg = '#414b3e' },
           [ 'LspReferenceWrite' ] = { bg = '#543f33' },
+          [ 'CursorLineNr' ] = { bg = colors.surface0, fg = colors.peach, bold = true },
+          [ 'MiniDiffSignChange' ] = { fg = colors.blue },
+          [ 'MiniDiffSignDelete' ] = { fg = colors.red, bold = true },
         }
-    end
+      end
       })
       vim.cmd.colorscheme('catppuccin')
     end
