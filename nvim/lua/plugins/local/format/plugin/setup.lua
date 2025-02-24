@@ -11,11 +11,11 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     local x, y = unpack(vim.api.nvim_win_get_cursor(0))
 
     if is_file_valid(event.match, '_ruff') then
-      vim.cmd('%!ruff check -ns - --stdin-filename % --fix-only')
+      vim.cmd('%!ruff check -nq - --stdin-filename %:p --fix-only')
     end
 
     if is_file_valid(event.match, '_black') then
-      vim.cmd('%!black -q - --stdin-filename % 2> /dev/null')
+      vim.cmd('%!black -q - --stdin-filename %:p 2> /dev/null')
     end
 
     vim.api.nvim_input('<esc>')
