@@ -42,5 +42,10 @@ return {
     })
 
     vim.api.nvim_create_user_command('DiffReload', set_diff, {})
+    vim.api.nvim_create_user_command('Diff', function()
+      vim.cmd [[
+        cexpr system("git diff -U1 --compact-summary --dst-prefix=$(echo $(git rev-parse --show-toplevel)'/') | grep -oE '^[+][+][+].*|^@@[^@]*' | sed 's/@@ [-,0-9]* +\\([0-9]*\\)/:\\1:1/g' | sed '/^+++/{N;s/+++ \\(.*\\)\\n\\(.*\\)/\\1\\2/;}'") | copen
+      ]]
+    end, {})
   end
 }
