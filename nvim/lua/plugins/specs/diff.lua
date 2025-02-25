@@ -84,6 +84,12 @@ return {
       end, { nargs = '*' })
     end
 
+    vim.api.nvim_create_user_command('Conflicts', function()
+      vim.cmd [[
+        cexpr system("git status -s | grep '^UU' | sed 's/^UU \\(.*\\)/\\1:1:(Conflict)/g'") | copen
+      ]]
+    end, {})
+
     vim.api.nvim_create_user_command('SetDiff', function(args)
       vim.g.commit = args.args
       set_diff()
