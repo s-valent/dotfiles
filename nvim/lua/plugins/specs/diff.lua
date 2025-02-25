@@ -27,6 +27,7 @@ return {
       end
 
       local ref = vim.g.commit or ''
+      local root = vim.system({ 'git', 'rev-parse', '--show-toplevel' }):wait().stdout:gsub('\n', '')
       local path = vim.system({ 'git', 'ls-files', '--full-name', vim.fn.expand('%') }):wait().stdout:gsub('\n', '')
       if path == "" then
         return
@@ -36,7 +37,7 @@ return {
       MiniDiff.set_ref_text(0, content)
 
       vim.api.nvim_create_user_command('Diff', function(args)
-        local cmd = 'git diff -U0 --dst-prefix=$(git rev-parse --show-toplevel)/'
+        local cmd = 'git diff -U0'
         args = args.args
         if args == '' then
           args = ref
@@ -46,16 +47,37 @@ return {
 
         local file
         for value in diff:gmatch('[^\n]+') do
-          if value:match('^+++') then
-            file = value:gsub('^+++ ', '')
+          if value:match('^--- a') then
+            file = value:gsub('^--- a', root)
+          elseif value:match('^+++ b') then
+            file = value:gsub('^+++ b', root)
           elseif value:match('^@@') then
             local i, j = value:find('+[0-9]+')
             local lnum = value:sub(i, j):gsub('+', '')
+            if lnum == '0' then
+              lnum = '1'
+            end
             local blame = vim.system({ 'git', 'blame', file, '-L', lnum .. ',' .. lnum }):wait().stdout
             i, j = blame:find('%([^)]+%)')
-            entries[#entries + 1] = { filename = file, lnum = lnum, text = blame:sub(i, j) }
+            local text = ""
+            if i and j then
+              text = blame:sub(i, j)
+            end
+
+            entries[#entries + 1] = { filename = file, lnum = lnum, text = text }
           end
         end
+
+        local dir = vim.fn.getcwd()
+        local status = vim.system({ 'git', 'status', '-s' }):wait().stdout
+        for value in status:gmatch('[^\n]+') do
+          if value:match('^ *%?+ *') then
+            file = value:gsub('^ *[^ ]+ *', '')
+            entries[#entries+1] = { filename = dir .. '/' .. file, lnum = 1, text = '(Untracked)'  }
+          end
+        end
+
+        -- TODO: added empty files
 
         vim.fn.setqflist(entries)
         vim.cmd.copen()
