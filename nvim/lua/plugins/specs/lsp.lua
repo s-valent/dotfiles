@@ -90,7 +90,11 @@ return {
         end
 
         vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-          vim.lsp.handlers.signature_help,
+          function(_, res, ctx, config)
+            if vim.g.hover_signature == true then
+              vim.lsp.handlers.signature_help(_, res, ctx, config)
+            end
+          end,
           { border = 'single', focusable = false }
         )
 
@@ -217,6 +221,10 @@ return {
         disallow_prefix_unmatching = true,
       }
     })
+
+    vim.keymap.set({ 'n', 'i' }, '<c-h>', function()
+      vim.g.hover_signature = not vim.g.hover_signature
+    end, { expr = true, remap = true, desc = 'Switch [H]over Signature Help' })
 
     vim.lsp.set_log_level('error')
   end

@@ -96,7 +96,7 @@ return {
     end, { nargs = '*' })
 
 
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWrite' }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWrite', 'FocusGained' }, {
       desc = 'SetDiffSource',
       callback = set_diff,
     })
