@@ -177,6 +177,7 @@ return {
     config.ruff.setup({
       root_dir = find_python_root,
     })
+    config.ts_ls.setup({}) -- npm i -g typescript-language-server
 
     local cmp = require('cmp')
     local mapping = {
