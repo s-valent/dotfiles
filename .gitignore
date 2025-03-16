@@ -4,6 +4,7 @@ ssh
 custom.*
 
 /*
+!/aerospace
 !/alacritty
 !/ghostty
 !/helix
