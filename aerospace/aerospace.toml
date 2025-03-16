@@ -1,4 +1,4 @@
-after-login-command = ['workspace 1']
+after-login-command = ['workspace 0']
 after-startup-command = []
 start-at-login = true
 
@@ -16,17 +16,17 @@ automatically-unhide-macos-hidden-apps = true
 
 [gaps]
     inner.horizontal = 5
-    inner.vertical =   5
-    outer.left =       0
-    outer.bottom =     0
-    outer.top =        0
-    outer.right =      0
+    inner.vertical = 5
+    outer.left = 0
+    outer.bottom = 0
+    outer.top = 0
+    outer.right = 0
 
 [mode.main.binding]
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
+    # alt-1 = 'workspace 1'
+    # alt-2 = 'workspace 2'
+    # alt-3 = 'workspace 3'
+    # alt-4 = 'workspace 4'
     alt-5 = 'workspace 5'
     alt-6 = 'workspace 6'
     alt-7 = 'workspace 7'
@@ -34,19 +34,33 @@ automatically-unhide-macos-hidden-apps = true
     alt-9 = 'workspace 9'
     alt-0 = 'workspace 0'
 
-    alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
-    alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
-    alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
-    alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
-    alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
-    alt-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
-    alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
-    alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
-    alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
-    alt-shift-0 = ['move-node-to-workspace 0', 'workspace 0']
+    # ctrl-alt-1 = ['move-node-to-workspace 1', 'workspace 1']
+    # ctrl-alt-2 = ['move-node-to-workspace 2', 'workspace 2']
+    # ctrl-alt-3 = ['move-node-to-workspace 3', 'workspace 3']
+    # ctrl-alt-4 = ['move-node-to-workspace 4', 'workspace 4']
+    ctrl-alt-5 = ['move-node-to-workspace 5', 'workspace 5']
+    ctrl-alt-6 = ['move-node-to-workspace 6', 'workspace 6']
+    ctrl-alt-7 = ['move-node-to-workspace 7', 'workspace 7']
+    ctrl-alt-8 = ['move-node-to-workspace 8', 'workspace 8']
+    ctrl-alt-9 = ['move-node-to-workspace 9', 'workspace 9']
+    ctrl-alt-0 = ['move-node-to-workspace 0', 'workspace 0']
 
     alt-tab = 'workspace-back-and-forth'
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+    ctrl-alt-tab = 'move-workspace-to-monitor --wrap-around next'
+
+    alt-backtick = '''exec-and-forget aerospace focus --window-id $(
+        grep -m1 -A1 "^$(aerospace list-windows --focused | cut -f1 -d' ')" \
+            <(echo "$(aerospace list-windows --workspace focused | cut -f1 -d' ' | tee /dev/stdout)$") \
+            | tail -n1)
+    '''
+
+    ctrl-alt-enter = 'fullscreen'
+    ctrl-alt-up = 'layout floating'
+    ctrl-alt-down = 'layout tiling'
+    ctrl-alt-left = 'focus left'
+    ctrl-alt-right = 'focus right'
+    ctrl-alt-minus = 'resize width -20'
+    ctrl-alt-equal = 'resize width +20'
 
 [[on-window-detected]]
     check-further-callbacks = true
@@ -54,6 +68,49 @@ automatically-unhide-macos-hidden-apps = true
 
 [[on-window-detected]]
     if.app-id = 'com.kagi.kagimacOS'
-    if.window-title-regex-substring = '^$'  # move any fullscreen window elsewhere
+    check-further-callbacks = true
+    run = ['move-node-to-workspace O']
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace S']
+
+[[on-window-detected]]
+    if.app-id = 'com.mitchellh.ghostty'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace G']
+
+
+[[on-window-detected]]
+    if.app-id = 'com.microsoft.VSCode'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace C']
+
+[[on-window-detected]]
+    if.app-id = 'ru.keepcoder.Telegram'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace T']
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Music'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace M']
+
+[[on-window-detected]]
+    if.app-id = 'us.zoom.xos'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace Z']
+
+# move any fullscreen windows elsewhere
+[[on-window-detected]]
+    if.app-id = 'com.kagi.kagimacOS'
+    if.window-title-regex-substring = '^$'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace 0']
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari'
+    if.window-title-regex-substring = '^$'
     check-further-callbacks = true
     run = ['move-node-to-workspace 0']
