@@ -79,7 +79,7 @@ automatically-unhide-macos-hidden-apps = true
 [[on-window-detected]]
     if.app-id = 'com.mitchellh.ghostty'
     check-further-callbacks = true
-    run = ['layout tiling', 'move-node-to-workspace 2']
+    run = ['move-node-to-workspace 2']
 
 
 [[on-window-detected]]
