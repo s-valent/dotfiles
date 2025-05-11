@@ -7,8 +7,12 @@ export JULIA_DEPOT_PATH="${HOME}/Library/Julia"
 
 # rust
 export RUSTUP_HOME="${HOME}/Library/Rust/toolchains"
-export CARGO_HOME="${HOME}/.cargo"
+export CARGO_HOME="${HOME}/Library/Rust/cargo"
 export PATH="${PATH}:${CARGO_HOME}/bin"
+export PATH="${PATH}:${RUSTUP_HOME}/toolchains/$(rustup default | awk '{ print($1) }')/bin"
+
+# go
+export PATH="${PATH}:${HOME}/Library/Application Support/go/home/bin"
 
 # python
 export PYTHONPATH="${PYTHONPATH}:${HOME}/Library/Python"

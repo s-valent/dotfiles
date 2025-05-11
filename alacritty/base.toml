@@ -33,7 +33,7 @@ thickness = 0.3
 
 [cursor.style]
 shape = "Block"
-blinking = "Never"
+# blinking = "Never"
 
 [terminal]
 osc52 = "CopyPaste"

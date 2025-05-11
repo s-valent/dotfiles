@@ -17,7 +17,7 @@ c.InteractiveShell.banner1 = (
 c.InlineBackend.figure_format = "retina"
 c.TerminalInteractiveShell.autoformatter = None
 c.TerminalInteractiveShell.confirm_exit = False
-c.TerminalInteractiveShell.highlighting_style = "bw"
+# c.TerminalInteractiveShell.highlighting_style = "bw"
 c.TerminalInteractiveShell.prompts_class = "IPython.terminal.prompts.ClassicPrompts"
 c.TerminalInteractiveShell.term_title = False
 
