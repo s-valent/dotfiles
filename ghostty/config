@@ -1,3 +1,5 @@
+auto-update-channel = tip
+
 confirm-close-surface = false
 window-save-state = "never"
 maximize = true

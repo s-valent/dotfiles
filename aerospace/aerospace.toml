@@ -23,10 +23,10 @@ automatically-unhide-macos-hidden-apps = true
     outer.right = 0
 
 [mode.main.binding]
-    # alt-1 = 'workspace 1'
-    # alt-2 = 'workspace 2'
-    # alt-3 = 'workspace 3'
-    # alt-4 = 'workspace 4'
+    alt-1 = 'workspace 1'
+    alt-2 = 'workspace 2'
+    alt-3 = 'workspace 3'
+    alt-4 = 'workspace 4'
     alt-5 = 'workspace 5'
     alt-6 = 'workspace 6'
     alt-7 = 'workspace 7'
@@ -34,10 +34,10 @@ automatically-unhide-macos-hidden-apps = true
     alt-9 = 'workspace 9'
     alt-0 = 'workspace 0'
 
-    # ctrl-alt-1 = ['move-node-to-workspace 1', 'workspace 1']
-    # ctrl-alt-2 = ['move-node-to-workspace 2', 'workspace 2']
-    # ctrl-alt-3 = ['move-node-to-workspace 3', 'workspace 3']
-    # ctrl-alt-4 = ['move-node-to-workspace 4', 'workspace 4']
+    ctrl-alt-1 = ['move-node-to-workspace 1', 'workspace 1']
+    ctrl-alt-2 = ['move-node-to-workspace 2', 'workspace 2']
+    ctrl-alt-3 = ['move-node-to-workspace 3', 'workspace 3']
+    ctrl-alt-4 = ['move-node-to-workspace 4', 'workspace 4']
     ctrl-alt-5 = ['move-node-to-workspace 5', 'workspace 5']
     ctrl-alt-6 = ['move-node-to-workspace 6', 'workspace 6']
     ctrl-alt-7 = ['move-node-to-workspace 7', 'workspace 7']
@@ -69,28 +69,28 @@ automatically-unhide-macos-hidden-apps = true
 [[on-window-detected]]
     if.app-id = 'com.kagi.kagimacOS'
     check-further-callbacks = true
-    run = ['move-node-to-workspace O']
+    run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
     if.app-id = 'com.apple.Safari'
     check-further-callbacks = true
-    run = ['move-node-to-workspace S']
+    run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
     if.app-id = 'com.mitchellh.ghostty'
     check-further-callbacks = true
-    run = ['move-node-to-workspace G']
+    run = ['move-node-to-workspace 2']
 
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.VSCode'
     check-further-callbacks = true
-    run = ['move-node-to-workspace C']
+    run = ['move-node-to-workspace 3']
 
 [[on-window-detected]]
     if.app-id = 'ru.keepcoder.Telegram'
     check-further-callbacks = true
-    run = ['move-node-to-workspace T']
+    run = ['move-node-to-workspace 4']
 
 [[on-window-detected]]
     if.app-id = 'com.apple.Music'
