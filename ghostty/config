@@ -26,8 +26,9 @@ adjust-cell-width = 5%
 # font-thicken = true
 # font-style-italic = false
 # font-style-bold-italic = false
-# font-size = 13
-# adjust-cell-height = 25%
+# font-size = 13.2
+# adjust-cell-height = 10%
+# adjust-font-baseline = 2
 # font-feature = "-calt"
 
 cursor-color =
@@ -57,7 +58,7 @@ keybind = "cmd+shift+backspace=text:\x0b"
 keybind = "cmd+z=text:\x1F"
 
 keybind = "cmd+q=close_all_windows"
-keybind = "global:ctrl+space=toggle_quick_terminal"
+# keybind = "global:ctrl+space=toggle_quick_terminal"
 
 keybind = "cmd+f=write_scrollback_file:open"
 
@@ -65,9 +66,22 @@ keybind = "cmd+f=write_scrollback_file:open"
 command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
 
 keybind = "cmd+k=text:\x0C"
-keybind = "cmd+q=text:\x13q"
-keybind = "cmd+w=text:\x13&"
-keybind = "cmd+f=text:\x13/"
+keybind = "cmd+q=text:\x01q"
+keybind = "cmd+w=text:\x01&"
+keybind = "cmd+f=text:\x01/"
+keybind = "cmd+d=text:\x01%"
+keybind = "cmd+shift+d=text:\x01\""
+keybind = "cmd+t=text:\x01c"
+
+keybind = "cmd+1=text:\x011"
+keybind = "cmd+2=text:\x012"
+keybind = "cmd+3=text:\x013"
+keybind = "cmd+4=text:\x014"
+keybind = "cmd+5=text:\x015"
+keybind = "cmd+6=text:\x016"
+keybind = "cmd+7=text:\x017"
+keybind = "cmd+8=text:\x018"
+keybind = "cmd+9=text:\x019"
 
 # theme
 background = "2d2d2d"
