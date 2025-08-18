@@ -226,7 +226,5 @@ return {
     vim.keymap.set({ 'n', 'i' }, '<c-h>', function()
       vim.g.hover_signature = not vim.g.hover_signature
     end, { expr = true, remap = true, desc = 'Switch [H]over Signature Help' })
-
-    vim.lsp.set_log_level('error')
   end
 }

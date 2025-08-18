@@ -1,5 +1,7 @@
 auto-update-channel = tip
 macos-icon = xray
+custom-shader = ./shaders/cursor_blaze.glsl
+# custom-shader = ./shaders/glitchy.glsl
 
 confirm-close-surface = false
 window-save-state = "never"
@@ -11,6 +13,7 @@ window-padding-y = 5
 quick-terminal-position = "bottom"
 quick-terminal-animation-duration = 0
 macos-titlebar-style = "transparent"
+# clipboard-read = "allow"
 
 term = "xterm-256color"
 
@@ -61,28 +64,38 @@ keybind = "cmd+z=text:\x1F"
 keybind = "cmd+q=close_all_windows"
 # keybind = "global:ctrl+space=toggle_quick_terminal"
 
-keybind = "cmd+f=write_scrollback_file:open"
-
-# tmux
-command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
-
-keybind = "cmd+k=text:\x0C"
-keybind = "cmd+q=text:\x01q"
-keybind = "cmd+w=text:\x01&"
-keybind = "cmd+f=text:\x01/"
-keybind = "cmd+d=text:\x01%"
-keybind = "cmd+shift+d=text:\x01\""
-keybind = "cmd+t=text:\x01c"
-
-keybind = "cmd+1=text:\x011"
-keybind = "cmd+2=text:\x012"
-keybind = "cmd+3=text:\x013"
-keybind = "cmd+4=text:\x014"
-keybind = "cmd+5=text:\x015"
-keybind = "cmd+6=text:\x016"
-keybind = "cmd+7=text:\x017"
-keybind = "cmd+8=text:\x018"
-keybind = "cmd+9=text:\x019"
+# keybind = "cmd+f=write_scrollback_file:open"
+# 
+# # tmux
+# command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
+# 
+# keybind = "cmd+k=text:\x0C"
+# keybind = "cmd+q=text:\x01q"
+# keybind = "cmd+w=text:\x01&"
+# keybind = "cmd+f=text:\x01/"
+# keybind = "cmd+d=text:\x01%"
+# keybind = "cmd+shift+d=text:\x01\""
+# keybind = "cmd+t=text:\x01c"
+# 
+# keybind = "cmd+1=text:\x011"
+# keybind = "cmd+2=text:\x012"
+# keybind = "cmd+3=text:\x013"
+# keybind = "cmd+4=text:\x014"
+# keybind = "cmd+5=text:\x015"
+# keybind = "cmd+6=text:\x016"
+# keybind = "cmd+7=text:\x017"
+# keybind = "cmd+8=text:\x018"
+# keybind = "cmd+9=text:\x019"
+# 
+# keybind = "cmd+digit_1=text:\x011"
+# keybind = "cmd+digit_2=text:\x012"
+# keybind = "cmd+digit_3=text:\x013"
+# keybind = "cmd+digit_4=text:\x014"
+# keybind = "cmd+digit_5=text:\x015"
+# keybind = "cmd+digit_6=text:\x016"
+# keybind = "cmd+digit_7=text:\x017"
+# keybind = "cmd+digit_8=text:\x018"
+# keybind = "cmd+digit_9=text:\x019"
 
 # theme
 background = "2d2d2d"
