@@ -12,7 +12,7 @@ window-padding-x = 5
 window-padding-y = 5
 quick-terminal-position = "bottom"
 quick-terminal-animation-duration = 0
-macos-titlebar-style = "transparent"
+macos-titlebar-style = "tabs"
 # clipboard-read = "allow"
 
 term = "xterm-256color"
