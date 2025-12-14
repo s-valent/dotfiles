@@ -1,6 +1,6 @@
 auto-update-channel = tip
 macos-icon = xray
-custom-shader = ./shaders/cursor_blaze.glsl
+# custom-shader = ./shaders/cursor_blaze.glsl
 # custom-shader = ./shaders/glitchy.glsl
 
 confirm-close-surface = false
@@ -10,6 +10,7 @@ window-width = 5000
 window-height = 5000
 window-padding-x = 5
 window-padding-y = 5
+bell-features = no-audio,no-system,no-title
 quick-terminal-position = "bottom"
 quick-terminal-animation-duration = 0
 macos-titlebar-style = "tabs"

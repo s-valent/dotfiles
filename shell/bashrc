@@ -3,7 +3,7 @@ HISTSIZE=1000000 HISTFILESIZE=1000000
 HISTIGNORE="&:ls:[bf]g:exit"
 HISTTIMEFORMAT='%F %T '
 SHELL_SESSION_HISTORY=0
-shopt -s histappend
+# shopt -s histappend
 shopt -s cmdhist lithist
 shopt -u progcomp  # don't unfold dirs on tab
 export HISTFILE="${HOME}/.history"

@@ -16,4 +16,5 @@ custom.*
 !/shell
 !/tmux
 !/vscode
+!/yabai
 !.gitignore
