@@ -1,0 +1,4 @@
+yabai -m config layout float
+
+# yabai -m config focus_follows_mouse autofocus
+yabai -m config focus_follows_mouse autoraise
