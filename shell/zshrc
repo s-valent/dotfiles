@@ -1,4 +1,4 @@
-export HISTFILE="${HOME}/.history"
+export HISTFILE="${HOME}/.zsh_history"
 export PROMPT='%B%F{8}%1~ %f→ %b'
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 export SHELL_SESSIONS_DISABLE="1"

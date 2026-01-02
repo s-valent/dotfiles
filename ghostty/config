@@ -14,7 +14,7 @@ bell-features = no-audio,no-system,no-title
 quick-terminal-position = "bottom"
 quick-terminal-animation-duration = 0
 macos-titlebar-style = "tabs"
-# clipboard-read = "allow"
+clipboard-read = "allow"
 
 term = "xterm-256color"
 
@@ -31,9 +31,10 @@ adjust-cell-width = 5%
 # font-thicken = true
 # font-style-italic = false
 # font-style-bold-italic = false
-# font-size = 13.2
+# font-size = 12.9
 # adjust-cell-height = 10%
-# adjust-font-baseline = 2
+# adjust-cell-width = 0%
+# adjust-font-baseline = 1
 # font-feature = "-calt"
 
 cursor-color =
@@ -66,10 +67,10 @@ keybind = "cmd+q=close_all_windows"
 # keybind = "global:ctrl+space=toggle_quick_terminal"
 
 # keybind = "cmd+f=write_scrollback_file:open"
-# 
+#
 # # tmux
 # command = "bash -lc '((tmux ls | grep -v \(attached\)\$ && exec tmux attach) || exec tmux > /dev/null)'"
-# 
+#
 # keybind = "cmd+k=text:\x0C"
 # keybind = "cmd+q=text:\x01q"
 # keybind = "cmd+w=text:\x01&"
@@ -77,7 +78,7 @@ keybind = "cmd+q=close_all_windows"
 # keybind = "cmd+d=text:\x01%"
 # keybind = "cmd+shift+d=text:\x01\""
 # keybind = "cmd+t=text:\x01c"
-# 
+#
 # keybind = "cmd+1=text:\x011"
 # keybind = "cmd+2=text:\x012"
 # keybind = "cmd+3=text:\x013"
@@ -87,7 +88,7 @@ keybind = "cmd+q=close_all_windows"
 # keybind = "cmd+7=text:\x017"
 # keybind = "cmd+8=text:\x018"
 # keybind = "cmd+9=text:\x019"
-# 
+#
 # keybind = "cmd+digit_1=text:\x011"
 # keybind = "cmd+digit_2=text:\x012"
 # keybind = "cmd+digit_3=text:\x013"
@@ -98,7 +99,7 @@ keybind = "cmd+q=close_all_windows"
 # keybind = "cmd+digit_8=text:\x018"
 # keybind = "cmd+digit_9=text:\x019"
 
-# theme
+## tomorrow night
 background = "2d2d2d"
 foreground = "cccccc"
 cursor-color = "cccccc"
@@ -128,3 +129,34 @@ palette = 14=#5fb3b3
 # white
 palette = 7=#d4d4d4
 palette = 15=#d4d4d4
+
+# ## vitesse dark
+# background = "222222"
+# foreground = "dbd7ca"
+# cursor-color = "dbd7ca"
+# cursor-text = "222222"
+
+# # black
+# palette = 0=#393a34
+# palette = 8=#393a34
+# # red
+# palette = 1=#cb7676
+# palette = 9=#cb7676
+# # green
+# palette = 2=#4d9375
+# palette = 10=#4d9375
+# # yellow
+# palette = 3=#e6cc77
+# palette = 11=#e6cc77
+# # blue
+# palette = 4=#6394bf
+# palette = 12=#6394bf
+# # magenta
+# palette = 5=#d9739f
+# palette = 13=#d9739f
+# # cyan
+# palette = 6=#5eaab5
+# palette = 14=#5eaab5
+# # white
+# palette = 7=#dbd7ca
+# palette = 15=#dbd7ca

@@ -7,6 +7,7 @@ SHELL_SESSION_HISTORY=0
 shopt -s cmdhist lithist
 shopt -u progcomp  # don't unfold dirs on tab
 export HISTFILE="${HOME}/.history"
+[[ "$TERM_PROGRAM" == "vscode" ]] || [[ "$CURSOR_TRACE_ID" == "" ]] || export HISTFILE=/dev/null
 
 export EDITOR=vim
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
@@ -47,6 +48,10 @@ function caffeinate-hours() {
 
 function code-reload() {
     ([[ "$SSH_CLIENT" == "" ]] && lsof | grep "Code Helper" | cut -d" " -f2 || pgrep -f vscode-server) | xargs -r kill
+}
+
+function cursor-reload() {
+    ([[ "$SSH_CLIENT" == "" ]] && lsof | grep "Cursor Helper" | cut -d" " -f2 || pgrep -f cursor-server) | xargs -r kill
 }
 
 if [[ $- == *i* ]]; then
