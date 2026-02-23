@@ -13,7 +13,6 @@ window-padding-y = 5
 bell-features = no-audio,no-system,no-title
 quick-terminal-position = "bottom"
 quick-terminal-animation-duration = 0
-macos-titlebar-style = "tabs"
 clipboard-read = "allow"
 
 term = "xterm-256color"
@@ -25,6 +24,8 @@ font-style-bold-italic = false
 font-size = 14.9
 adjust-cell-height = 25%
 adjust-cell-width = 5%
+
+palette-generate = false
 
 # font-family = "Fira Code"
 # font-family-bold = "Fira Code"
