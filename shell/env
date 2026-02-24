@@ -23,7 +23,7 @@ export JUPYTER_CONFIG_DIR="$HOME/Library/Python/preferences/jupyter"
 # export DYLD_LIBRARY_PATH="${DYLD_LIBRARY_PATH}:/opt/pkg/lib"
 
 # uv
-export PATH="$(realpath /Users/valent/.local/bin/python* | sed 's|bin/.*|bin|g'):$PATH"
+export PATH="$(realpath $HOME/.local/bin/python* | sed 's|bin/.*|bin|g'):$PATH"
 alias pip-install='uv pip install --python $(uv python find) --break-system-packages'
 alias pip-uninstall='uv pip install --python $(uv python find) --break-system-packages'
 
