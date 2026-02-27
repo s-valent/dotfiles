@@ -17,13 +17,13 @@ clipboard-read = "allow"
 
 term = "xterm-256color"
 
-font-family = "Agave S"
-font-thicken = true
-font-style-italic = false
-font-style-bold-italic = false
-font-size = 14.9
-adjust-cell-height = 25%
-adjust-cell-width = 5%
+# font-family = "Agave S"
+# font-thicken = true
+# font-style-italic = false
+# font-style-bold-italic = false
+# font-size = 14.9
+# adjust-cell-height = 25%
+# adjust-cell-width = 5%
 
 palette-generate = false
 
@@ -37,6 +37,16 @@ palette-generate = false
 # adjust-cell-width = 0%
 # adjust-font-baseline = 1
 # font-feature = "-calt"
+
+font-family = "Ubuntu Sans Mono"
+font-thicken = true
+font-style-italic = false
+font-style-bold-italic = false
+font-size = 13.5
+adjust-cell-height = 15%
+adjust-cell-width = 5%
+adjust-font-baseline = 1
+font-feature = "-calt"
 
 cursor-color =
 cursor-style-blink = true
