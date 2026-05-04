@@ -1,4 +1,3 @@
-auto-update-channel = tip
 macos-icon = xray
 # custom-shader = ./shaders/cursor_blaze.glsl
 # custom-shader = ./shaders/glitchy.glsl
@@ -25,7 +24,15 @@ term = "xterm-256color"
 # adjust-cell-height = 25%
 # adjust-cell-width = 5%
 
-palette-generate = false
+# font-family = "JB Nerd"
+# font-thicken = true
+# font-style-italic = false
+# font-style-bold-italic = false
+# font-size = 13
+# adjust-cell-height = 10%
+# adjust-cell-width = 0%
+# adjust-font-baseline = 1
+# font-feature = "-calt"
 
 # font-family = "Fira Code"
 # font-family-bold = "Fira Code"
@@ -38,16 +45,27 @@ palette-generate = false
 # adjust-font-baseline = 1
 # font-feature = "-calt"
 
-font-family = "Ubuntu Sans Mono"
+# font-family = "Ubuntu Sans Mono"
+# font-thicken = true
+# font-style-italic = false
+# font-style-bold-italic = false
+# font-size = 13.5
+# adjust-cell-height = 15%
+# adjust-cell-width = 5%
+# adjust-font-baseline = 1
+# font-feature = "-calt"
+
+font-family = "Ubuntu Mono"
 font-thicken = true
 font-style-italic = false
 font-style-bold-italic = false
-font-size = 13.5
-adjust-cell-height = 15%
-adjust-cell-width = 5%
+font-size = 13.6
+adjust-cell-height = 40%
+adjust-cell-width = 0%
 adjust-font-baseline = 1
 font-feature = "-calt"
 
+palette-generate = false
 cursor-color =
 cursor-style-blink = true
 cursor-style = "block"
@@ -113,8 +131,8 @@ keybind = "cmd+q=close_all_windows"
 ## tomorrow night
 background = "2d2d2d"
 foreground = "cccccc"
-cursor-color = "cccccc"
-cursor-text = "2d2d2d"
+cursor-color = cell-foreground
+cursor-text = cell-background
 
 # black
 palette = 0=#2e2d2d
