@@ -75,6 +75,11 @@ automatically-unhide-macos-hidden-apps = true
     run = ['move-node-to-workspace 1']
 
 [[on-window-detected]]
+    if.app-id = 'app.zen-browser.zen'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace 1']
+
+[[on-window-detected]]
     if.app-id = 'com.mitchellh.ghostty'
     check-further-callbacks = true
     run = ['move-node-to-workspace 2']
@@ -82,6 +87,11 @@ automatically-unhide-macos-hidden-apps = true
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.VSCode'
+    check-further-callbacks = true
+    run = ['move-node-to-workspace 3']
+
+[[on-window-detected]]
+    if.app-id = 'com.todesktop.230313mzl4w4u92'
     check-further-callbacks = true
     run = ['move-node-to-workspace 3']
 
