@@ -7,7 +7,7 @@ SHELL_SESSION_HISTORY=0
 shopt -s cmdhist lithist
 shopt -u progcomp  # don't unfold dirs on tab
 export HISTFILE="${HOME}/.history"
-[[ "$TERM_PROGRAM" == "vscode" ]] || [[ "$CURSOR_TRACE_ID" == "" ]] || export HISTFILE=/dev/null
+[[ "$CURSOR_AGENT" != "1" ]] || export HISTFILE=/dev/null
 
 export EDITOR=vim
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
