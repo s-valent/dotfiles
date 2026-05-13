@@ -93,64 +93,64 @@ keybind = "cmd+shift+backspace=text:\x0b"
 keybind = "cmd+z=text:\x1F"
 keybind = "cmd+q=close_all_windows"
 
-## tomorrow night
-background = "2d2d2d"
-foreground = "cccccc"
-cursor-color = cell-foreground
-cursor-text = cell-background
+# ## tomorrow night
+# background = "2d2d2d"
+# foreground = "cccccc"
+# cursor-color = cell-foreground
+# cursor-text = cell-background
+#
+# # black
+# palette = 0=#2e2d2d
+# palette = 8=#676767
+# # red
+# palette = 1=#e15a60
+# palette = 9=#e15a60
+# # green
+# palette = 2=#99c794
+# palette = 10=#99c794
+# # yellow
+# palette = 3=#fac863
+# palette = 11=#fac863
+# # blue
+# palette = 4=#6699cc
+# palette = 12=#6699cc
+# # magenta
+# palette = 5=#c594c5
+# palette = 13=#c594c5
+# # cyan
+# palette = 6=#5fb3b3
+# palette = 14=#5fb3b3
+# # white
+# palette = 7=#d4d4d4
+# palette = 15=#d4d4d4
+
+## vitesse dark
+background = "222222"
+foreground = "dbd7ca"
+cursor-color = "dbd7ca"
+cursor-text = "222222"
 
 # black
-palette = 0=#2e2d2d
-palette = 8=#676767
+palette = 0=#393a34
+palette = 8=#7d7f77
 # red
-palette = 1=#e15a60
-palette = 9=#e15a60
+palette = 1=#cb7676
+palette = 9=#cb7676
 # green
-palette = 2=#99c794
-palette = 10=#99c794
+palette = 2=#4d9375
+palette = 10=#4d9375
 # yellow
-palette = 3=#fac863
-palette = 11=#fac863
+palette = 3=#e6cc77
+palette = 11=#e6cc77
 # blue
-palette = 4=#6699cc
-palette = 12=#6699cc
+palette = 4=#6394bf
+palette = 12=#6394bf
 # magenta
-palette = 5=#c594c5
-palette = 13=#c594c5
+palette = 5=#d9739f
+palette = 13=#d9739f
 # cyan
-palette = 6=#5fb3b3
-palette = 14=#5fb3b3
+palette = 6=#5eaab5
+palette = 14=#5eaab5
 # white
-palette = 7=#d4d4d4
-palette = 15=#d4d4d4
-
-# ## vitesse dark
-# background = "222222"
-# foreground = "dbd7ca"
-# cursor-color = "dbd7ca"
-# cursor-text = "222222"
-
-# # black
-# palette = 0=#393a34
-# palette = 8=#393a34
-# # red
-# palette = 1=#cb7676
-# palette = 9=#cb7676
-# # green
-# palette = 2=#4d9375
-# palette = 10=#4d9375
-# # yellow
-# palette = 3=#e6cc77
-# palette = 11=#e6cc77
-# # blue
-# palette = 4=#6394bf
-# palette = 12=#6394bf
-# # magenta
-# palette = 5=#d9739f
-# palette = 13=#d9739f
-# # cyan
-# palette = 6=#5eaab5
-# palette = 14=#5eaab5
-# # white
-# palette = 7=#dbd7ca
-# palette = 15=#dbd7ca
+palette = 7=#dbd7ca
+palette = 15=#dbd7ca
