@@ -91,65 +91,65 @@ function rs() {
     done
 }
 
-# show how much time operation took
-function fmt-time() {
-    local hours=$(($1 / 3600))
-    local minutes=$((($1 % 3600) / 60))
-    local seconds=$(($1 % 60))
+# # show how much time operation took
+# function fmt-time() {
+#     local hours=$(($1 / 3600))
+#     local minutes=$((($1 % 3600) / 60))
+#     local seconds=$(($1 % 60))
 
-    case $hours in
-        0)
-            case $minutes in
-                0)
-                    printf "%ds" $seconds ;;
-                ?)
-                    printf "%dm%02ds" $minutes $seconds ;;
-                *)
-                    printf "%dm" $minutes ;;
-            esac ;;
-        ? | [1-2]?)
-            printf "%dh%02dm" $hours $minutes ;;
-        *)
-            printf "%dh" $hours ;;
-    esac
-}
+#     case $hours in
+#         0)
+#             case $minutes in
+#                 0)
+#                     printf "%ds" $seconds ;;
+#                 ?)
+#                     printf "%dm%02ds" $minutes $seconds ;;
+#                 *)
+#                     printf "%dm" $minutes ;;
+#             esac ;;
+#         ? | [1-2]?)
+#             printf "%dh%02dm" $hours $minutes ;;
+#         *)
+#             printf "%dh" $hours ;;
+#     esac
+# }
 
-function preexec() {
-    timer="$SECONDS"
-}
+# function preexec() {
+#     timer="$SECONDS"
+# }
 
-if [[ $- == *i* ]]; then
-    bind -x '"\C-x\C-j": should_call_preexec=true'
-    bind '"\C-m": "\C-x\C-j\C-j"'
-    trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
-fi
+# if [[ $- == *i* ]]; then
+#     bind -x '"\C-x\C-j": should_call_preexec=true'
+#     bind '"\C-m": "\C-x\C-j\C-j"'
+#     trap '[[ -z "$should_call_preexec" ]] || preexec; unset should_call_preexec' DEBUG
+# fi
 
-function precmd() {
-    local result=$?
+# function precmd() {
+#     local result=$?
 
-    # detect missing newline
-    IFS='[;' read -p $'\e[6n' -d R -rs _ _ COLUMN _
-    [[ $COLUMN == 1 ]] || echo -e "\033[0;7;7m%\033[0m"
+#     # detect missing newline
+#     IFS='[;' read -p $'\e[6n' -d R -rs _ _ COLUMN _
+#     [[ $COLUMN == 1 ]] || echo -e "\033[0;7;7m%\033[0m"
 
-    # set terminal name
-    printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "$(dirs +0)"
-    printf "\x1b[1 q"
+#     # set terminal name
+#     printf "\033]2;%s@%s: %s\007" "$USER" $(hostname -s) "$(dirs +0)"
+#     printf "\x1b[1 q"
 
-    # add timer
-    [[ -z "$timer" ]] && return
-    local time=$(fmt-time $(($SECONDS - $timer)))
-    local color=$([[ $result -eq 0 ]] && echo 2 || echo 1)
-    unset timer
-    [[ $time == "0s" ]] && [[ $result -eq 0 ]] && return
+#     # add timer
+#     [[ -z "$timer" ]] && return
+#     local time=$(fmt-time $(($SECONDS - $timer)))
+#     local color=$([[ $result -eq 0 ]] && echo 2 || echo 1)
+#     unset timer
+#     [[ $time == "0s" ]] && [[ $result -eq 0 ]] && return
 
-    tput sc
-    tput cuu1
-    tput cuf $(($(tput cols) - ${#time} - 1))
-    printf "\033[0;3${color}m ${time}\033[0m\n"
-    tput rc
-}
+#     tput sc
+#     tput cuu1
+#     tput cuf $(($(tput cols) - ${#time} - 1))
+#     printf "\033[0;3${color}m ${time}\033[0m\n"
+#     tput rc
+# }
 
-export PROMPT_COMMAND="precmd;$PROMPT_COMMAND"
+# export PROMPT_COMMAND="precmd;$PROMPT_COMMAND"
 
 # fix editor
 function edit-command() {
@@ -180,3 +180,5 @@ function next-job() {
     [[ "$next" != "" ]] && fg "%$next" || echo -ne '\033[1A\033[2K'
     history -d $(history 1)
 }
+
+alias oc=opencode
