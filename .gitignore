@@ -12,6 +12,7 @@ custom.*
 !/ipython
 !/iterm
 !/nvim
+!/opencode
 !/pgcli
 !/scripts
 !/shell
