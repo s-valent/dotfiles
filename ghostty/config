@@ -16,7 +16,8 @@ clipboard-read = "allow"
 
 term = "xterm-256color"
 
-font-family = "Agave S"
+font-family = "Agave Light"
+font-family-bold = "Agave Bold"
 font-thicken = true
 font-style-italic = false
 font-style-bold-italic = false
@@ -24,14 +25,13 @@ font-size = 14.5
 adjust-cell-height = 30%
 adjust-cell-width = 5%
 
-# font-family = "JB Nerd"
+# font-family = "JetBrains Mono"
 # font-thicken = true
 # font-style-italic = false
 # font-style-bold-italic = false
-# font-size = 13
+# font-size = 13.3
 # adjust-cell-height = 10%
-# adjust-cell-width = 0%
-# adjust-font-baseline = 1
+# adjust-font-baseline = 2
 # font-feature = "-calt"
 
 # font-family = "Fira Code"
@@ -40,9 +40,10 @@ adjust-cell-width = 5%
 # font-style-italic = false
 # font-style-bold-italic = false
 # font-size = 12.9
-# adjust-cell-height = 10%
+# adjust-cell-height = 15%
+
 # adjust-cell-width = 0%
-# adjust-font-baseline = 1
+# adjust-font-baseline = 2
 # font-feature = "-calt"
 
 # font-family = "Ubuntu Sans Mono"
